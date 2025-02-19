@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Guessing Game</title>
+    <link rel="stylesheet" href="Poke-Guesser-sample.css">
+</head>
+<body>
+    <h1>Pokémon Guessing Game</h1>
+    <input type="text" id="guessInput" placeholder="Enter Pokémon name">
+    <button onclick="checkGuess()">Guess</button>
+
+    <div id="feedback">
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Generation</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Color</th>
+            </tr>
+            <tr>
+                <td id="type"></td>
+                <td id="generation"></td>
+                <td id="height"></td>
+                <td id="weight"></td>
+                <td id="color"></td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="Poke-guesser-sample.js"></script>
+</body>
+</html>
