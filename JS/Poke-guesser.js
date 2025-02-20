@@ -1,5 +1,6 @@
 let targetPokemon = {}; // Global variable to store the Pokémon to guess
 let allPokemon = [];
+var Guesses = 0;
 
 async function fetchAllPokemon() {
     try {
@@ -47,6 +48,8 @@ async function fetchRandomPokemon() {
 // Function to check the user's guess
 function checkGuess() {
     let userGuess = document.getElementById("guessInput").value.toLowerCase();
+    let guessedPokemon = {}; // Define outside the chain
+    var Guesses = Guesses + 1;
 
     fetch(`https://pokeapi.co/api/v2/pokemon/${userGuess}`)
         .then(response => {
@@ -56,25 +59,29 @@ function checkGuess() {
             }
             return response.json();
         })
-        .then(pokemonData => fetch(pokemonData.species.url)) // Fetch species data
+        .then(data => {
+            guessedPokemon.image = data.sprites.front_default;
+            guessedPokemon.type1 = data.types[0]?.type.name || "None";
+            guessedPokemon.type2 = data.types[1]?.type.name || "None";
+            return fetch(data.species.url); // Fetch species data
+        })
         .then(response => response.json())
-        .then(speciesData => fetch(speciesData.generation.url)) // Fetch generation data
+        .then(speciesData => {
+            guessedPokemon.color = speciesData.color.name;
+            guessedPokemon.habitat = speciesData.habitat ? speciesData.habitat.name : "Unknown";
+            return fetch(speciesData.generation.url); // Fetch generation data
+        })
         .then(response => response.json())
         .then(generationData => {
-            let guessedPokemon = {
-                name: userGuess,
-                image: pokemonData.sprites.front_default,
-                type1: pokemonData.types[0]?.type.name || "None",
-                type2: pokemonData.types[1]?.type.name || "None",
-                generation: generationData.name.replace("generation-", "").toUpperCase(),
-                color: speciesData.color.name,
-                habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown"
-            };
+            guessedPokemon.name = userGuess;
+            guessedPokemon.generation = generationData.name.replace("generation-", "").toUpperCase();
 
             updatePokemonTable(guessedPokemon);
         })
         .catch(error => console.error("Error fetching guess:", error));
 }
+
+
 
 // Function to update the table with guessed Pokémon data
 function updatePokemonTable(guessedPokemon) {
@@ -82,20 +89,20 @@ function updatePokemonTable(guessedPokemon) {
     let row = document.createElement("tr");
 
     function checkMatch(value, correctValue) {
-        return value === correctValue ? "✅" : "❌";
+        return value === correctValue ? "correct" : "wrong";
     }
 
     row.innerHTML = `
-        <td><img src="${guessedPokemon.image}" alt="${guessedPokemon.name}" class="pokemon-img"></td>
+        <td><img src="${guessedPokemon.image}" alt="${guessedPokemon.name}" class="pokemon-table-icon"></td>
         <td>${guessedPokemon.name}</td>
-        <td>${guessedPokemon.generation} ${checkMatch(guessedPokemon.generation, targetPokemon.generation)}</td>
-        <td>${guessedPokemon.type1} ${checkMatch(guessedPokemon.type1, targetPokemon.type1)}</td>
-        <td>${guessedPokemon.type2} ${checkMatch(guessedPokemon.type2, targetPokemon.type2)}</td>
-        <td>${guessedPokemon.color} ${checkMatch(guessedPokemon.color, targetPokemon.color)}</td>
-        <td>${guessedPokemon.habitat} ${checkMatch(guessedPokemon.habitat, targetPokemon.habitat)}</td>
+        <td class="${checkMatch(guessedPokemon.generation, targetPokemon.generation)}">${guessedPokemon.generation}</td>
+        <td class="${checkMatch(guessedPokemon.type1, targetPokemon.type1)}">${guessedPokemon.type1}</td>
+        <td class="${checkMatch(guessedPokemon.type2, targetPokemon.type2)}">${guessedPokemon.type2}</td>
+        <td class="${checkMatch(guessedPokemon.color, targetPokemon.color)}">${guessedPokemon.color}</td>
+        <td class="${checkMatch(guessedPokemon.habitat, targetPokemon.habitat)}">${guessedPokemon.habitat}</td>
     `;
 
-    tableBody.appendChild(row);
+    tableBody.prepend(row);
 }
 
 function showSuggestions() {
@@ -114,12 +121,10 @@ function showSuggestions() {
         let suggestionItem = document.createElement("div");
         suggestionItem.classList.add("suggestion");
 
-        // Fetch Pokémon sprite (icon)
         let pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
         let pokemonData = await pokemonResponse.json();
         let pokemonImage = pokemonData.sprites.front_default;
 
-        // Create image element
         let img = document.createElement("img");
         img.src = pokemonImage;
         img.classList.add("pokemon-icon");
@@ -129,18 +134,35 @@ function showSuggestions() {
 
         // When clicked, insert into input & hide suggestions
         suggestionItem.onclick = function () {
+            console.log("Suggestion clicked:", pokemon);
             document.getElementById("guessInput").value = pokemon;
+            checkGuess();
+            console.log("Input value:", inputValue);
             suggestionsContainer.style.display = "none";
+            document.getElementById("guessInput").value = "";
         };
-
+        
         suggestionsContainer.appendChild(suggestionItem);
     });
 
-    suggestionsContainer.style.display = "block"; // Show suggestions
+    suggestionsContainer.style.display = "block"; // how suggestions
+}
+function restartGame() {
+    // Clear the table (except headers)
+    let tableBody = document.getElementById("pokemonTableBody");
+    tableBody.innerHTML = ""; 
+    document.getElementById("guessInput").value = "";
+
+    fetchRandomPokemon();
 }
 
-// Attach the function to the input field
+
+document.getElementById("restartButton").addEventListener("click", restartGame);
 document.getElementById("guessInput").addEventListener("input", showSuggestions);
+document.getElementById("guessInput").addEventListener("keydown", function (event){
+    if (event.key === "enter"){
+        checkGuess();}
+});
 
 
 fetchRandomPokemon();

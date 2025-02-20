@@ -11,7 +11,7 @@
     
     <nav>
         <button onclick="window.location.href='index.html'">GO BACK</button>
-        <button onclick="GameReset()">RESET</button>
+        <button id="restartButton">Restart Game</button>
     </nav>
     
     <h1>Guess the Pokemon</h1>
@@ -28,7 +28,7 @@
         <table id="guessTable">
             <thead>
                 <tr>
-                    <th>Image</th>
+                    <th class="imgth"></th>
                     <th>name</th>
                     <th>Generation</th>
                     <th>Type</th>
@@ -37,7 +37,8 @@
                     <th>Habitat</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="pokemonTableBody"></tbody>
+
             </tbody>
         </table>
     </div>

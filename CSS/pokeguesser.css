@@ -9,7 +9,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
+    opacity: 0.9;
     filter: blur(2px);
     z-index: -1;
 }
@@ -22,12 +22,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Black overlay with 50% opacity */
+    background: rgba(0, 0, 0, 0.7);
 }
 
 
 nav, h1, input {
-    position: relative; /* Ensures content stays above the background */
+    position: relative;
     z-index: 1;
     color: white;
     text-align: center;
@@ -64,20 +64,20 @@ input{
     margin: 4px 2px;
     cursor: pointer;
     text-align: center;
-    margin: 0 auto; /* Centers it horizontally */
+    margin: 0 auto;
 }
 
 .autocomplete-container {
     position: relative;
-    width: 260px; /* Adjust as needed */
-    margin: 0 auto; /* Center horizontally */
+    width: 260px;
+    margin: 0 auto; 
     
 }
 
 .suggestion {
     display: flex;
-    align-items: center;  /* Align image & text in the center */
-    gap: 10px;  /* Space between image and text */
+    align-items: center;
+    gap: 10px;
     cursor: pointer;
     border-bottom: 1px solid #ddd;
     font-size: 1.5em;
@@ -88,9 +88,16 @@ input{
 }
 
 .pokemon-icon {
-    width: 5vw; /* Fixed width */
-    height: 5vw; /* Fixed height */
-    object-fit: contain; /* Ensure the image is properly sized */
+    width: 5vw;
+    height: 5vw;
+    object-fit: contain; 
+}
+.pokemon-table-icon {
+    width: 5vw;
+    height: 5vw;
+    object-fit: contain;
+    overflow: hidden;
+    max-height: 5vw;
 }
 
 #suggestions {
@@ -101,7 +108,7 @@ input{
     border-top: none;
     max-height: 20vh;
     overflow-y: auto;
-    display: none; /* Hidden by default */
+    display: none;
     z-index: 10;
 }
 
@@ -117,11 +124,26 @@ table {
 }
 
 th {
+    font-size: 1.15em;
     border-bottom: 1px solid white  ;
     padding: 10px;
     margin: 2px;
+    text-shadow: 5px 5px 5px black;
 }
 td{
-    margin: 0.1vw;
-    padding: 1vw;
+    text-align: center;
+    color: white;
+    text-shadow: 5px 5px 5px black;
+}
+.imgth{
+    border-bottom: none;
+}
+.correct {
+    background-color: green;
+    color: white;
+}
+
+.wrong {
+    background-color: red;
+    color: white;
 }
