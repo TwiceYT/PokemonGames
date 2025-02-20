@@ -7,8 +7,43 @@
     <link rel="stylesheet" href="/CSS/pokeguesser.css">
 </head>
 <body>
+    <div class="background"></div>
+    
+    <nav>
+        <button onclick="window.location.href='index.html'">GO BACK</button>
+        <button onclick="GameReset()">RESET</button>
+    </nav>
+    
+    <h1>Guess the Pokemon</h1>
+    <div class="autocomplete-container">
+        <input type="text" id="guessInput" placeholder="Enter Pokémon name">
+        <div class="suggestions">
+            <div id="suggestions">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="guesshistory">
+        <table id="guessTable">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>name</th>
+                    <th>Generation</th>
+                    <th>Type</th>
+                    <th>Type 2</th>
+                    <th>Color</th>
+                    <th>Habitat</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
     
 
     <script src="/JS/Poke-guesser.js"></script>
 </body>
+
 </html>

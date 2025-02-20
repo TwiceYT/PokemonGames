@@ -1,0 +1,127 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-image: url("/IMG/Pokeguess/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    filter: blur(2px);
+    z-index: -1;
+}
+
+/* Dark overlay */
+.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Black overlay with 50% opacity */
+}
+
+
+nav, h1, input {
+    position: relative; /* Ensures content stays above the background */
+    z-index: 1;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+    margin-top: 20px;
+    text-shadow: pink 2px 2px 2px;
+}
+
+button{
+    background-color: rgb(34, 34, 34);
+    border: 1px solid white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input{
+    background-color: rgb(34, 34, 34);
+    border: 1px solid white;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 auto; /* Centers it horizontally */
+}
+
+.autocomplete-container {
+    position: relative;
+    width: 260px; /* Adjust as needed */
+    margin: 0 auto; /* Center horizontally */
+    
+}
+
+.suggestion {
+    display: flex;
+    align-items: center;  /* Align image & text in the center */
+    gap: 10px;  /* Space between image and text */
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.5em;
+}
+
+.suggestion:hover {
+    background: lightgray;
+}
+
+.pokemon-icon {
+    width: 5vw; /* Fixed width */
+    height: 5vw; /* Fixed height */
+    object-fit: contain; /* Ensure the image is properly sized */
+}
+
+#suggestions {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 20vh;
+    overflow-y: auto;
+    display: none; /* Hidden by default */
+    z-index: 10;
+}
+
+
+table {
+    color: pink;
+    font-size: 1.2em;
+    margin: 0 auto;
+    border-collapse: separate;
+    width: 50%;
+    border-spacing: 1vw;
+    font-weight: bold;
+}
+
+th {
+    border-bottom: 1px solid white  ;
+    padding: 10px;
+    margin: 2px;
+}
+td{
+    margin: 0.1vw;
+    padding: 1vw;
+}

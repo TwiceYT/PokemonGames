@@ -5,14 +5,20 @@ body {
 }
 
 table {
-    margin: 20px auto;
-    border-collapse: collapse;
+    margin: 0 auto;
+    border-collapse: separate;
     width: 50%;
+    border-spacing: 1vw;
 }
 
-th, td {
-    border: 1px solid black;
+th {
+    border-bottom: 1px solid black;
     padding: 10px;
+    margin: 2px;
+}
+td{
+    margin: 0.1vw;
+    padding: 1vw;
 }
 
 .correct {
